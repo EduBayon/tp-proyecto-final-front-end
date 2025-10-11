@@ -9,7 +9,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-
   const PASS = "pepe123";
 
   useEffect(() => {
@@ -85,4 +84,5 @@ const Login = () => {
   );
 };
 
-export { Login };
+export default Login;
+
