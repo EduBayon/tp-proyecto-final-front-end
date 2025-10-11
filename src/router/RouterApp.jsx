@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login } from "../views/Login";
-import { Messages } from "../views/Messages";
-import { NotFound } from "../views/NotFound";
+import Login from "../views/Login";
+import Messages from "../views/Messages";
+import NotFound from "../views/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const RouterApp = () => {
@@ -9,16 +9,20 @@ const RouterApp = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/chat"
+
+        <Route
+          path="/chat"
           element={
             <ProtectedRoute>
               <Messages />
-            </ProtectedRoute>}
+            </ProtectedRoute>
+          }
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export { RouterApp }
+export default RouterApp;
