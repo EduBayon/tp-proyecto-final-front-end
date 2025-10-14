@@ -1,6 +1,7 @@
-import Chat from "../components/Chat";
-import Sidebar from "../components/Sidebar";
-import { ChatProvider } from "../context/ChatContext";
+
+import Chat from "../components/Chat"
+import Sidebar from "../components/Sidebar"
+import { ChatProvider } from "../context/ChatContext"
 
 const Messages = () => {
   return (
@@ -10,7 +11,8 @@ const Messages = () => {
         <Chat />
       </div>
     </ChatProvider>
-  );
-};
+  )
+}
 
-export default Messages;
+
+export default Messages; 
