@@ -1,3 +1,4 @@
+/* === RESETEO GLOBAL === */
 * {
   margin: 0;
   padding: 0;
@@ -5,39 +6,55 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.app {
+/* === ESTRUCTURA PRINCIPAL === */
+.app,
+.messages-container {
   display: flex;
   height: 100vh;
+  width: 100%;
+  background-color: #f0f2f5;
+  overflow: hidden;
 }
 
+/* === SIDEBAR === */
 .sidebar {
-  width: 250px;
+  width: 280px;
   background-color: #f5f5f5;
   border-right: 1px solid #ddd;
   display: flex;
   flex-direction: column;
+  padding: 15px;
 }
 
 .search {
   padding: 10px;
   border: none;
+  border-radius: 8px;
   border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: #007bff;
 }
 
 .search-result {
   text-align: center;
   margin-top: 10px;
   color: gray;
+  font-size: 14px;
 }
 
-/* user list */
-
+/* === LISTA DE USUARIOS === */
 .user-list {
   list-style: none;
   padding: 5px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
+  overflow-y: auto;
 }
 
 .user {
@@ -45,13 +62,23 @@
   align-items: center;
   padding: 10px;
   cursor: pointer;
-  width: 100%;
-  border-radius: 20px;
-  border: 1px solid #eee;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
 
 .user:hover {
-  background-color: #eee;
+  background-color: #e6e6e6;
+  border-color: #ddd;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+  object-fit: cover;
 }
 
 .user-info {
@@ -64,19 +91,12 @@
   font-size: 13px;
 }
 
-.avatar {
-  width: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 2px solid #ddd;
-}
-
-/* end user list */
-
+/* === CHAT === */
 .chat {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 }
 
 .user-not-found {
@@ -84,27 +104,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: gray;
 }
 
 .chat-header {
-  background-color: yellowgreen;
+  background-color: #fff;
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
 }
 
 .chat-user {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
 .chat-header img {
   width: 30px;
+  border-radius: 50%;
 }
 
 .chat-actions {
@@ -118,12 +138,10 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
+  color: #333;
 }
 
-.chat-messages {
-  background-color: violet;
-}
-
+/* === MENSAJES === */
 .chat-messages {
   flex: 1;
   padding: 15px;
@@ -131,28 +149,31 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto;
 }
 
 .message {
-  background-color: rgb(206, 246, 255);
-  padding: 5px 10px;
-  border-radius: 8px;
+  background-color: #dff9fb;
+  padding: 8px 12px;
+  border-radius: 10px;
   align-self: flex-end;
-  max-width: 50%;
+  max-width: 60%;
 }
 
 .message .time {
-  font-size: 9px;
-  display: block;
-  text-align: end;
+  font-size: 10px;
+  text-align: right;
   color: #979797;
+  margin-top: 2px;
 }
 
+/* === INPUT DEL CHAT === */
 .chat-footer {
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
   gap: 10px;
+  background-color: #fff;
 }
 
 .chat-footer form {
@@ -165,6 +186,7 @@
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
+  border-radius: 6px;
 }
 
 .chat-footer button {
@@ -172,11 +194,34 @@
   border: none;
   background-color: #007bff;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-/* Login page */
+.chat-footer button:hover {
+  background-color: #0056b3;
+}
+
+/* === BOTÓN CERRAR SESIÓN === */
+.logout-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e84141;
+}
+
+/* === LOGIN === */
 .login-main {
   height: 100vh;
   display: flex;
@@ -220,6 +265,7 @@
   border: 1px solid #ddd;
   outline: none;
   font-size: 14px;
+  border-radius: 6px;
 }
 
 .login-main form input:focus {
@@ -242,55 +288,75 @@ form button:hover {
   background-color: #0056b3;
 }
 
-p {
-  margin: 0;
-  font-size: 13px;
-}
-
-form .text-info {
-  margin-top: 10px;
-  font-size: 13px;
-}
-
+/* === POPUP (nuevo diseño) === */
 .cont-popup {
-  background-color: rgba(33, 33, 33, 0.261);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
 }
 
 .popup {
-  background-color: whitesmoke;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
   width: 60%;
-  box-shadow: 10px 10px 15px -5px rgba(0, 0, 0, 0.205);
+  max-width: 500px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.popup h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #333;
+}
+
+.popup p {
+  margin-bottom: 20px;
+  color: #555;
 }
 
 .popup button {
-  padding: 3px 12px;
-  background-color: rgb(136, 163, 163);
-  border: 1px solid rgb(201, 201, 201);
-  border-radius: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
   color: white;
-  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-/* Resposive mínimo para mobile */
+.popup button:hover {
+  background-color: #0056b3;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .popup {
+    width: 80%;
+  }
+}
+
 @media (max-width: 480px) {
   .sidebar {
     display: none;
   }
 
-  header {
-    flex-direction: column;
+  .chat {
+    width: 100%;
   }
 
   .popup {
-    width: 80%;
+    width: 85%;
   }
 }

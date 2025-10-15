@@ -1,18 +1,24 @@
+import Sidebar from "../components/Sidebar";
+import Chat from "../components/Chat";
 
-import Chat from "../components/Chat"
-import Sidebar from "../components/Sidebar"
-import { ChatProvider } from "../context/ChatContext"
+export default function Messages() {
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "/"; // redirige al login
+  };
 
-const Messages = () => {
   return (
-    <ChatProvider>
-      <div className="app">
-        <Sidebar />
-        <Chat />
-      </div>
-    </ChatProvider>
-  )
+    <div className="messages-container">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Chat principal */}
+      <Chat />
+
+      {/* Botón de cerrar sesión */}
+      <button className="logout-btn" onClick={handleLogout}>
+        Cerrar sesión
+      </button>
+    </div>
+  );
 }
-
-
-export default Messages; 

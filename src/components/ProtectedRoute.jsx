@@ -1,10 +1,14 @@
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  console.log("Hola desde protected")
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-  return isLoggedIn ? children : <Navigate to="/" replace />
-}
+  if (!isLoggedIn) {
+    console.warn("Intento de acceso sin login");
+    return <Navigate to="/" replace />;
+  }
 
-export default ProtectedRoute
+  return children;
+};
+
+export default ProtectedRoute;

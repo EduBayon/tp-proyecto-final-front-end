@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../views/Login";
+import { Login } from "../views/Login";
 import Messages from "../views/Messages";
 import NotFound from "../views/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
