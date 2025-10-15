@@ -1,82 +1,106 @@
-import { useState } from "react"
-import { useChat } from "../context/ChatContext"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { useChat } from "../context/ChatContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Chat() {
-  const [msg, setMsg] = useState("")
-  const [showPopup, setShowPopup] = useState(false)
+  const [msg, setMsg] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [newName, setNewName] = useState("");
 
-  // 1. Obtenemos del contexto todo lo necesario
-  const { users, selectedUser, setUsers } = useChat()
+  const { users, selectedUser, setUsers } = useChat();
+  const user = users.find(u => u.id === selectedUser);
+  const navigate = useNavigate();
 
-  // 2. Buscamos el usuario activo
-  const user = users.find(u => u.id === selectedUser)
-
-  const navigate = useNavigate()
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   if (!user) {
     return (
       <div className="user-not-found">
         <p>No hay usuario seleccionado...</p>
       </div>
-    )
+    );
   }
 
-  // 3. Manejo del input
-  const handleChange = (event) => {
-    setMsg(event.target.value)
-  }
+  const handleChange = (e) => setMsg(e.target.value);
 
-  // 4. Cuando enviamos el formulario
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!msg.trim()) return;
 
     const newMessage = {
       id: crypto.randomUUID(),
       text: msg,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    }
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
 
-    // ✅ Actualizamos el estado de manera INMUTABLE
-    const updatedUsers = users.map(u =>
-      u.id === user.id
-        ? { ...u, messages: [...u.messages, newMessage] }
-        : u
-    )
+    const updatedUsers = users.map((u) =>
+      u.id === user.id ? { ...u, messages: [...u.messages, newMessage] } : u
+    );
 
-    setUsers(updatedUsers) // esto dispara el useEffect del contexto que guarda en localStorage
-
-    setMsg("")
-  }
+    setUsers(updatedUsers);
+    setMsg("");
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn")
-    navigate("/")
-  }
+    localStorage.removeItem("isLoggedIn");
+    navigate("/");
+  };
 
-  const handleShowPopup = () => {
-    setShowPopup(true)
-  }
+  const handleShowPopup = () => setShowPopup(true);
+  const handleClosePopup = () => setShowPopup(false);
 
-  const handleClosePopup = () => {
-    setShowPopup(false)
-  }
+  const handleThemeChange = (e) => setTheme(e.target.value);
+
+  const handleNameChange = () => {
+    if (!newName.trim()) return;
+    const updatedUsers = users.map((u) =>
+      u.id === user.id ? { ...u, name: newName } : u
+    );
+    setUsers(updatedUsers);
+    setNewName("");
+    setShowPopup(false);
+  };
 
   return (
     <>
-      {
-        showPopup === true && <section className="cont-popup">
+      {showPopup && (
+        <section className="cont-popup">
           <div className="popup">
             <h2>Configuración de Chat</h2>
-            <h3>Cambiar tema:</h3>
-            <select name="" id="">
-              <option value="">Claro</option>
-              <option value="">Oscuro</option>
-            </select><br></br>
-            <button onClick={handleClosePopup}>Cerrar</button>
+
+            <div className="popup-option">
+              <label>Tema:</label>
+              <select value={theme} onChange={handleThemeChange}>
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+              </select>
+            </div>
+
+            <div className="popup-option">
+              <label>Cambiar nombre:</label>
+              <input
+                type="text"
+                placeholder="Nuevo nombre"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
+              <button onClick={handleNameChange}>Guardar</button>
+            </div>
+
+            <button className="close-btn" onClick={handleClosePopup}>
+              Cerrar
+            </button>
           </div>
         </section>
-      }
+      )}
+
       <div className="chat">
         <header className="chat-header">
           <div>
@@ -87,15 +111,21 @@ export default function Chat() {
                 className="chat-avatar"
               />
               <strong>{user.name}</strong>
-              {user.lastSeen !== "" && <span className="last-seen">Last seen: {user.lastSeen}</span>}
+              {user.lastSeen !== "" && (
+                <span className="last-seen">Last seen: {user.lastSeen}</span>
+              )}
             </div>
           </div>
 
           <div className="chat-actions">
             <button title="Camera">📷</button>
             <button title="Gallery">🖼️</button>
-            <button title="Settings" onClick={handleShowPopup}>⚙️</button>
-            <Link to="/help" title="Help">❓</Link>
+            <button title="Settings" onClick={handleShowPopup}>
+              ⚙️
+            </button>
+            <Link to="/help" title="Help">
+              ❓
+            </Link>
             <button onClick={handleLogout}>Cerrar sesión</button>
           </div>
         </header>
@@ -122,5 +152,5 @@ export default function Chat() {
         </footer>
       </div>
     </>
-  )
+  );
 }
