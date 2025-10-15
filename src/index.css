@@ -14,6 +14,7 @@
   width: 100%;
   background-color: #f0f2f5;
   overflow: hidden;
+  position: relative;
 }
 
 /* === SIDEBAR === */
@@ -24,6 +25,12 @@
   display: flex;
   flex-direction: column;
   padding: 15px;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
 }
 
 .search {
@@ -97,6 +104,7 @@
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  position: relative;
 }
 
 .user-not-found {
@@ -288,8 +296,6 @@ form button:hover {
   background-color: #0056b3;
 }
 
-
-
 .popup button:hover {
   background-color: #0056b3;
 }
@@ -306,8 +312,20 @@ form button:hover {
 }
 
 @media (max-width: 480px) {
+
+  /* Cambié esto para no ocultar la sidebar */
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f5f5f5;
+    transform: translateX(-100%);
+    z-index: 20;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
   }
 
   .chat {
@@ -320,7 +338,6 @@ form button:hover {
 }
 
 /* === POPUP STYLES === */
-/* === POPUP (CONFIGURACIÓN) === */
 .cont-popup {
   position: fixed;
   top: 0;
@@ -434,7 +451,6 @@ form button:hover {
   background-color: #007bff;
   color: white;
 }
-
 
 /* === MODO OSCURO GENERAL === */
 [data-theme="dark"] {
