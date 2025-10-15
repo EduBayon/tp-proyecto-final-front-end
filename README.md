@@ -13,7 +13,7 @@ Esta es una aplicación de chat desarrollada con **React**, que permite a los us
 ## Instalación y ejecución
 
 1. Clonar el repositorio:
-```bash
+
 git clone <URL_DEL_REPOSITORIO>
 
 2. Entrar en la carpeta del proyecto:
